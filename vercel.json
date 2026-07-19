@@ -2,5 +2,6 @@
   "buildCommand": "npm run install-plugins && npx quartz build",
   "outputDirectory": "public",
   "framework": null,
+  "cleanUrls": true,
   "installCommand": "npm install"
 }
