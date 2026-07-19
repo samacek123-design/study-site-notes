@@ -25,7 +25,10 @@
 
 /* Base reading surface ------------------------------------------------ */
 body {
-  font-feature-settings: "kern", "liga", "onum" 1;
+  font-feature-settings:
+    "kern",
+    "liga",
+    "onum" 1;
 }
 
 .center {
@@ -141,7 +144,9 @@ article a.internal,
   font-weight: inherit;
   text-decoration: none;
   border-bottom: 1px solid color-mix(in srgb, var(--link) 32%, transparent);
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 
   &:hover {
     color: var(--link-hover);
@@ -179,6 +184,127 @@ a.tag-link {
 }
 .callout-title {
   font-weight: $semiBoldWeight;
+}
+
+/* ────────────────────────────────────────────────────────────
+   Practice Questions — premium, Apple-inspired Q&A cards.
+   Scoped to [!question] callouts so other callouts keep their
+   semantic colour. Neutral graphite surfaces, hairline borders,
+   a restrained accent, and a quiet chevron affordance.
+   ──────────────────────────────────────────────────────────── */
+:root {
+  --qa-surface: color-mix(in srgb, var(--lightgray) 12%, var(--light));
+  --qa-surface-hover: color-mix(in srgb, var(--lightgray) 22%, var(--light));
+  --qa-border: color-mix(in srgb, var(--gray) 20%, transparent);
+  --qa-border-hover: color-mix(in srgb, var(--gray) 34%, transparent);
+  --qa-accent: var(--link);
+}
+:root[saved-theme="dark"] {
+  --qa-surface: color-mix(in srgb, var(--lightgray) 26%, var(--light));
+  --qa-surface-hover: color-mix(in srgb, var(--lightgray) 40%, var(--light));
+  --qa-border: color-mix(in srgb, var(--gray) 30%, transparent);
+  --qa-border-hover: color-mix(in srgb, var(--gray) 48%, transparent);
+}
+
+.callout[data-callout="question"] {
+  /* neutralise the amber callout palette */
+  --color: var(--darkgray);
+  --border: var(--qa-border);
+  --bg: var(--qa-surface);
+
+  background: var(--qa-surface);
+  border: 1px solid var(--qa-border);
+  border-left-width: 1px; /* drop the accent bar for a clean edge */
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 4%),
+    0 8px 24px -16px rgb(0 0 0 / 12%);
+  margin: 0.75rem 0;
+  padding: 0 1.35rem;
+  overflow: hidden;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    background: var(--qa-surface-hover);
+    border-color: var(--qa-border-hover);
+    box-shadow:
+      0 2px 4px rgb(0 0 0 / 5%),
+      0 14px 34px -18px rgb(0 0 0 / 20%);
+  }
+
+  /* Title row: neutral, medium weight, generous target ------------- */
+  & > .callout-title {
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1.05rem 0;
+    color: var(--dark);
+    cursor: pointer;
+
+    & .callout-title-inner {
+      font-weight: $semiBoldWeight;
+      letter-spacing: -0.011em;
+      font-size: 1.005rem;
+      line-height: 1.35;
+    }
+    & > .callout-title-inner,
+    & > .callout-title-inner > p {
+      color: var(--dark);
+    }
+
+    /* Leading marker: small, quiet, tinted with the accent --------- */
+    & .callout-icon {
+      --icon-size: 17px;
+      background-color: var(--qa-accent);
+      opacity: 0.9;
+    }
+
+    /* Fold chevron: pushed right, hairline-quiet ------------------- */
+    & .fold-callout-icon {
+      --icon-size: 17px;
+      margin-left: auto;
+      opacity: 0.4;
+      background-color: var(--darkgray);
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+    }
+  }
+  &:hover > .callout-title .fold-callout-icon {
+    opacity: 0.7;
+  }
+
+  /* Answer body: comfortable measure, muted ink ------------------- */
+  & > .callout-content {
+    color: var(--darkgray);
+    font-size: 0.95rem;
+    line-height: 1.62;
+    padding: 0 0 1.05rem;
+
+    & > :first-child {
+      margin-top: 0;
+    }
+    & > :last-child {
+      margin-bottom: 0;
+    }
+    strong,
+    b {
+      color: var(--dark);
+      font-weight: $semiBoldWeight;
+    }
+    /* hairline divider between prompt and answer */
+    border-top: 1px solid color-mix(in srgb, var(--qa-border) 70%, transparent);
+    margin-top: -0.35rem;
+    padding-top: 0.9rem;
+  }
+
+  /* Collapsed: hide the divider so the row reads as one clean line */
+  &.is-collapsed > .callout-content {
+    border-top: 0;
+  }
 }
 
 /* Mermaid diagrams as clean quick-reference panels -------------------- */

@@ -258,6 +258,72 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     `)
   }
 
+  // Mermaid reliability net. The community OFM plugin renders `code.mermaid`
+  // via a remote ESM import (cdnjs) that can silently fail — leaving the raw
+  // diagram source on the page. This mops up any diagram left unrendered,
+  // loading mermaid from a second CDN, and re-themes them on theme toggle.
+  componentResources.afterDOMLoaded.push(`
+    (() => {
+      let importing
+      const load = () =>
+        (importing ||= import("https://cdn.jsdelivr.net/npm/mermaid@11/+esm").then((m) => m.default))
+      const cssVar = (n) =>
+        getComputedStyle(document.documentElement).getPropertyValue(n).trim()
+      const source = new WeakMap()
+
+      async function renderPending() {
+        const nodes = [...document.querySelectorAll("code.mermaid")].filter(
+          (el) => !el.dataset.processed && !el.querySelector("svg"),
+        )
+        if (nodes.length === 0) return
+        let mermaid
+        try {
+          mermaid = await load()
+        } catch (e) {
+          console.error("mermaid fallback: load failed", e)
+          return
+        }
+        const dark = document.documentElement.getAttribute("saved-theme") === "dark"
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "loose",
+          theme: dark ? "dark" : "base",
+          themeVariables: {
+            fontFamily: cssVar("--codeFont"),
+            primaryColor: cssVar("--light"),
+            primaryTextColor: cssVar("--darkgray"),
+            primaryBorderColor: cssVar("--tertiary"),
+            lineColor: cssVar("--darkgray"),
+            secondaryColor: cssVar("--secondary"),
+            tertiaryColor: cssVar("--tertiary"),
+          },
+        })
+        for (const el of nodes) {
+          if (!source.has(el)) source.set(el, el.textContent)
+          try {
+            await mermaid.run({ nodes: [el] })
+          } catch (e) {
+            console.error("mermaid fallback: render failed", e)
+          }
+        }
+      }
+
+      function reRender() {
+        // Re-theme only the diagrams this fallback owns.
+        for (const el of document.querySelectorAll("code.mermaid[data-processed]")) {
+          if (!source.has(el)) continue
+          el.removeAttribute("data-processed")
+          el.textContent = source.get(el)
+        }
+        renderPending()
+      }
+
+      // Give the primary renderer first crack, then fill any gaps.
+      document.addEventListener("nav", () => setTimeout(renderPending, 400))
+      document.addEventListener("themechange", () => setTimeout(reRender, 0))
+    })()
+  `)
+
   if (cfg.enableSPA) {
     componentResources.afterDOMLoaded.push(spaRouterScript)
   } else {
