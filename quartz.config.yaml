@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: samacek123-design.github.io/study-site-notes
+  baseUrl: ""
   ignorePatterns:
     - private
     - templates
