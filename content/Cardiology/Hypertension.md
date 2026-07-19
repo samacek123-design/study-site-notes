@@ -53,30 +53,18 @@ Hypertension (HT) is a chronic elevation of blood pressure (office BP ≥140/90 
 - **Urgency** — severe BP **without** acute organ damage; lower over 24–48 h with oral agents.
 - Caution: do not rapidly lower BP in acute ischaemic stroke (loss of cerebral autoregulation).
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((Hypertension))
-    Definition
-      Office >=140/90
-      ISH in elderly
-      White-coat vs masked
-    Causes
-      Essential 90-95%
-      Secondary ABCDE
-    Evaluation
-      Confirm + baseline
-      Secondary screen
-      Target-organ damage
-    Management
-      Lifestyle
-      A C D +/- B
-      Combination therapy
-      Resistant HT
-    Crisis
-      Emergency = TOD, IV
-      Urgency = oral
+flowchart TD
+  A["Raised clinic BP >=140/90"] --> B{"Target-organ damage / crisis?"}
+  B -->|Yes| C["Emergency -> IV, gradual lowering (urgency = oral)"]
+  B -->|No| D["Confirm with ABPM/HBPM + assess causes & TOD"]
+  D --> E{"Secondary cause?"}
+  E -->|Yes| F["Screen ABCDE & treat cause"]
+  E -->|"No - essential"| G["Lifestyle + A / C / D +/- B"]
+  G --> H{"Controlled?"}
+  H -->|No| I["Combine A+C+D -> add spironolactone (resistant HT)"]
 ```
 
 ## Practice Questions

@@ -56,29 +56,18 @@ tags: [Cardiology]
 ### Case illustration
 - F/18 with exertional palpitations, blackouts, then collapse during a half-marathon requiring AED shock; post-resuscitation ECG shows prolonged QTc (590 ms) → **long QT syndrome** — a channelopathy causing exertional cardiac syncope and sudden death, treated with β-blockers and ICD.
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((Syncope / Arrhythmia))
-    Syncope causes
-      Reflex 60% low risk
-      Orthostatic 15%
-      Cardiac 10% high risk
-      Exertional = red flag
-    Palpitation ddx
-      Cardiac arrhythmia
-      High-output
-      Drugs / metabolic
-    Arrhythmia mechanism
-      Brady formation/propagation
-      Tachy automaticity/triggered/re-entry
-      Narrow vs wide QRS
-    Management
-      Vagal / adenosine
-      Unstable = DC cardioversion
-      Pacemaker for brady
-      Ablation / ICD / anticoagulation
+flowchart TD
+  A["Transient LOC / palpitations"] --> B["History + ECG (red flags: exertional, cardiac)"]
+  B --> C{"High-risk / cardiac cause?"}
+  C -->|"No - reflex / orthostatic"| D["Reassure + conservative measures"]
+  C -->|Yes| E["Arrhythmia workup: Holter, echo"]
+  E --> F{"Unstable?"}
+  F -->|Yes| G["DC cardioversion"]
+  F -->|"No - SVT"| H["Vagal / adenosine"]
+  E --> I["Brady -> pacemaker; SCD risk -> ICD; AF -> anticoagulate"]
 ```
 
 ## Practice Questions

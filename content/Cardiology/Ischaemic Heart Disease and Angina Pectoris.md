@@ -55,29 +55,18 @@ Ischaemic heart disease (IHD) is myocardial ischaemia from an imbalance between 
 - **Cardiac syndrome X / INOCA**: angina + ischaemia with non-obstructed coronaries (microvascular); treat with standard anti-anginals ± adjuncts.
 - **Congenital coronary anomalies**: cause of exertional syncope/sudden death in young athletes; normal ECG/exam — diagnose on CT/MRI angiography.
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((IHD / Angina))
-    Pathophysiology
-      Supply-demand mismatch
-      Atherosclerosis / LDL-years
-      Spasm, anaemia, AS, HOCM
-    Diagnosis
-      SOCRATES history
-      Typical vs atypical
-      Pre-test probability
-      Functional vs anatomical tests
-    Management
-      ABCDE
-      Statin LDL <=1.4
-      Anti-anginals
-      Revascularisation PCI vs CABG
-    Variants
-      Prinzmetal spasm
-      Syndrome X / INOCA
-      Coronary anomalies
+flowchart TD
+  A["Exertional chest pain (SOCRATES)"] --> B{"Typical / high pre-test probability?"}
+  B -->|Yes| C["Functional or anatomical testing (CTCA)"]
+  B -->|No| D["Seek alternative / atypical cause"]
+  C --> E["Confirmed IHD"]
+  E --> F["Secondary prevention: ABCDE + statin LDL <=1.4"]
+  E --> G["Anti-anginals: beta-blocker / CCB / nitrate"]
+  G --> H{"Refractory or high-risk anatomy?"}
+  H -->|Yes| I["Revascularise -> PCI vs CABG"]
 ```
 
 ## Practice Questions

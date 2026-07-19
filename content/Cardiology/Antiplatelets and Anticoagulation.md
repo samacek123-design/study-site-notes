@@ -45,28 +45,17 @@ Antithrombotic drugs prevent and treat thrombosis. **Antiplatelets** target *art
 - "**Triple therapy**" (anticoagulant + DAPT) maximises bleeding risk — keep it **short (≤30 days)**; when combined with anticoagulation, **clopidogrel** is the preferred antiplatelet and aspirin is limited to <100 mg.
 - Typical: DOAC + P2Y12 inhibitor for 6–12 months, then **anticoagulation monotherapy** after 12 months. Add a **PPI** for GI protection when ≥2 antithrombotics are used.
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((Antithrombotics))
-    Antiplatelet
-      Aspirin COX-1 TXA2
-      P2Y12 clopidogrel/ticagrelor/prasugrel
-      GPIIbIIIa IV peri-PCI
-      Dipyridamole cilostazol
-    Anticoagulant
-      Heparin UFH APTT protamine
-      LMWH fondaparinux anti-Xa
-      DOAC dabigatran/Xa inhibitors
-      Warfarin INR
-    Reversal
-      Protamine heparin
-      Idarucizumab dabigatran
-      Andexanet Xa inhibitors
-    Combining
-      Triple therapy short
-      DOAC + clopidogrel + PPI
+flowchart TD
+  A["Thrombosis risk / event"] --> B{"Arterial or venous/AF?"}
+  B -->|"Arterial (ACS, PCI, stroke)"| C["Antiplatelet: aspirin +/- P2Y12"]
+  B -->|"Venous / AF"| D["Anticoagulant: DOAC, LMWH or warfarin"]
+  C --> E{"Also needs anticoagulation?"}
+  E -->|Yes| F["Short triple therapy -> DOAC + clopidogrel + PPI"]
+  C --> G["Bleeding -> stop, transfuse platelets"]
+  D --> H["Bleeding -> idarucizumab / andexanet / protamine / vit K"]
 ```
 
 ## Practice Questions

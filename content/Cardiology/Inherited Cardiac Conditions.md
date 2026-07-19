@@ -31,27 +31,17 @@ Hereditary cardiac diseases are genetic (often autosomal dominant, with variable
 - Signs: tendon xanthomas, xanthelasma, corneal arcus (young). Diagnose on LDL-C thresholds + family history/genetics; use **cascade screening** of relatives.
 - Treat aggressively: high-intensity **statin + ezetimibe ± PCSK9 inhibitor** (± bile-acid sequestrant); many still need combination to reach target. See [[Ischaemic Heart Disease and Angina Pectoris]].
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((Inherited Cardiac))
-    Cardiomyopathies
-      DCM dilated Titin
-      HCM athlete SCD HOCM
-      ARVC RV fibrofatty exercise
-      RCM stiff vs constriction
-    Channelopathies
-      LQTS torsades beta-blocker
-      Brugada V1-V3 fever ICD
-      CPVT
-    Familial hypercholesterolaemia
-      High LDL AD
-      Premature CAD
-      Statin+ezetimibe+PCSK9
-    Connective tissue
-      Marfan aortopathy
-      Bicuspid valve
+flowchart TD
+  A["FHx sudden death / young cardiac presentation"] --> B{"Phenotype?"}
+  B -->|"Heart muscle"| C["Cardiomyopathy: HCM · DCM · ARVC · RCM"]
+  B -->|"Arrhythmia, normal heart"| D["Channelopathy: LQTS · Brugada · CPVT"]
+  B -->|"High LDL / premature CAD"| E["Familial hypercholesterolaemia -> statin + ezetimibe + PCSK9"]
+  B -->|"Aortopathy / tall"| F["Connective tissue: Marfan · bicuspid valve"]
+  C --> G["Risk-stratify for SCD -> ICD, avoid triggers, screen relatives"]
+  D --> G
 ```
 
 ## Practice Questions

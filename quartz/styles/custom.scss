@@ -1,3 +1,244 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+/* ────────────────────────────────────────────────────────────
+   Premium reading theme — Apple/Notion feel.
+   Two-column shell (left nav + reading column, no right rail).
+   Uses Quartz runtime CSS vars so light & dark both follow along.
+   ──────────────────────────────────────────────────────────── */
+
+:root {
+  --measure: 720px; /* comfortable reading line length */
+  --hairline: color-mix(in srgb, var(--gray) 26%, transparent);
+  --card-bg: color-mix(in srgb, var(--lightgray) 20%, var(--light));
+  --radius: 12px;
+
+  /* Links = "yellow", tuned per theme for legibility (accessibility). */
+  --link: #9a6a00; /* dark amber on light backgrounds */
+  --link-hover: #c98a00;
+}
+:root[saved-theme="dark"] {
+  --link: #e7b74d; /* warm gold on dark backgrounds */
+  --link-hover: #ffcf6b;
+  --hairline: color-mix(in srgb, var(--gray) 34%, transparent);
+  --card-bg: color-mix(in srgb, var(--lightgray) 30%, var(--light));
+}
+
+/* Base reading surface ------------------------------------------------ */
+body {
+  font-feature-settings: "kern", "liga", "onum" 1;
+}
+
+.center {
+  max-width: calc(var(--measure) + 6rem);
+  margin: 0 auto;
+  padding: 3.25rem 3rem 4rem;
+}
+
+/* Breadcrumbs: quiet, tight to the title ------------------------------ */
+.breadcrumb-container {
+  margin: 0 0 0.9rem;
+  font-size: 0.82rem;
+  color: var(--gray);
+  a {
+    color: var(--gray);
+    border: none;
+    &:hover {
+      color: var(--link);
+    }
+  }
+}
+
+/* Title: one, large, tightly tracked --------------------------------- */
+.article-title {
+  font-weight: $boldWeight;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  color: var(--dark);
+  margin: 0 0 1.6rem;
+}
+
+/* Kill the duplicate H1 that notes repeat inside the body.
+   article-title already renders the page title.
+   ponytail: assumes a note's leading body h1 == its title (true here). */
+.markdown-preview-view > h1:first-child,
+.center article > h1:first-child {
+  display: none;
+}
+
+/* Body copy ----------------------------------------------------------- */
+article {
+  font-size: 1.03rem;
+  line-height: 1.75;
+  color: var(--darkgray);
+
+  p {
+    margin: 0 0 1.05rem;
+  }
+  li {
+    margin: 0.28rem 0;
+    letter-spacing: 0.003em;
+  }
+  ul,
+  ol {
+    margin: 0 0 1.05rem;
+    padding-left: 1.35rem;
+  }
+
+  strong {
+    color: var(--dark);
+    font-weight: $semiBoldWeight;
+  }
+
+  /* Quiet, generous heading rhythm — no heavy underlines */
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--dark);
+    line-height: 1.25;
+    letter-spacing: -0.014em;
+    font-weight: $semiBoldWeight;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin: 2.8rem 0 0.9rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+  h3 {
+    font-size: 1.2rem;
+    margin: 1.9rem 0 0.7rem;
+  }
+  h4 {
+    font-size: 1.05rem;
+    margin: 1.4rem 0 0.5rem;
+  }
+
+  hr {
+    margin: 2.6rem 0;
+    border: none;
+    border-top: 1px solid var(--hairline);
+  }
+
+  code {
+    background: var(--card-bg);
+    border-radius: 5px;
+    padding: 0.05rem 0.35rem;
+    font-size: 0.9em;
+  }
+}
+
+/* Links: yellow text, no highlight background ------------------------- */
+article a,
+article a.internal,
+.center a.internal {
+  color: var(--link);
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0;
+  border-radius: 0;
+  font-weight: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--link) 32%, transparent);
+  transition: color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+  }
+}
+/* wikilink icons / embeds shouldn't get an underline */
+article a.internal:has(> img),
+article a:has(> img) {
+  border-bottom: none;
+}
+
+/* Inline tags: quiet neutral pills, not bright yellow chips ----------- */
+.tag-link,
+a.tag-link {
+  color: var(--gray) !important;
+  background: color-mix(in srgb, var(--gray) 14%, transparent) !important;
+  border: none !important;
+  border-radius: 999px;
+  padding: 0.08rem 0.55rem !important;
+  font-size: 0.78rem;
+  font-weight: $normalWeight;
+  &:hover {
+    color: var(--dark) !important;
+  }
+}
+
+/* Callouts as soft cards --------------------------------------------- */
+.callout {
+  border-radius: var(--radius);
+  border: 1px solid var(--hairline);
+  border-left-width: 3px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  margin: 1.4rem 0;
+}
+.callout-title {
+  font-weight: $semiBoldWeight;
+}
+
+/* Mermaid diagrams as clean quick-reference panels -------------------- */
+.mermaid,
+pre:has(> code.mermaid) {
+  display: flex;
+  justify-content: center;
+  margin: 1.8rem auto;
+  padding: 1.5rem 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Right rail is empty (TOC/graph/backlinks all off) — reclaim its space */
+.right.sidebar {
+  display: none;
+}
+
+/* Left nav rail: light, quiet, premium ------------------------------- */
+.left.sidebar {
+  border-right: 1px solid var(--hairline);
+  padding-top: 2.5rem;
+  font-size: 0.9rem;
+}
+.page-title a {
+  font-weight: $boldWeight;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--dark);
+}
+.left .explorer,
+.left .explorer a {
+  color: var(--gray);
+}
+.left .explorer a:hover {
+  color: var(--dark);
+}
+.left .explorer .folder-title {
+  color: var(--dark);
+  font-weight: $semiBoldWeight;
+}
+
+/* Quiet scrollbars in the rail */
+.sidebar ::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar ::-webkit-scrollbar-thumb {
+  background: var(--lightgray);
+  border-radius: 3px;
+}
+
+/* Footer: minimal */
+footer {
+  margin-top: 3rem;
+  color: var(--gray);
+  font-size: 0.8rem;
+}

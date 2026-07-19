@@ -45,28 +45,18 @@ Sudden severe chest pain has two time-critical cardiac causes: **ST-elevation my
 - **Imaging**: **CT aortogram** is first-line (fast, ~100% sens/spec, identifies false lumen); TOE (bedside, rapid, good for ascending aorta); MRI (excellent but slow — for stable/chronic follow-up).
 - **Management**: **rapid BP/heart-rate control** — target SBP 100–120 mmHg; β-blocker (labetalol) **first** then vasodilator (nitroprusside) to blunt dP/dt; treat tamponade by surgical drainage. **Type A → urgent surgery** (resection + graft); **Type B → medical** unless complicated (rupture, malperfusion, ongoing pain) → surgery/stent graft. Mortality ~1%/hour in first 48 h untreated. Links to [[Hypertension]] (hypertensive emergency).
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((Sudden Chest Pain))
-    STEMI
-      Occlusive thrombus
-      ST elevation >=2 leads
-      Troponin
-      Reperfusion <12h PCI or lysis
-      DAPT + anticoag
-      Remodelling ACEI beta-blocker
-    Aortic Dissection
-      Medial degeneration
-      HT 80% / Marfan
-      Type A ascending vs B
-      Tearing pain to back
-      CT aortogram
-      BP control + surgery
-    Differentials
-      Pericarditis
-      PE
+flowchart TD
+  A["Sudden severe chest pain"] --> B["ECG + examine (BP both arms)"]
+  B --> C{"ST elevation?"}
+  C -->|Yes| D["STEMI -> reperfusion <12h (PCI/lysis) + DAPT"]
+  C -->|"No - tearing pain to back / wide mediastinum"| E["CT aortogram"]
+  E --> F{"Type A (ascending)?"}
+  F -->|Yes| G["Emergency surgery + BP control"]
+  F -->|"Type B"| H["Medical BP control (beta-blocker first)"]
+  C -->|"Consider"| I["Differentials: PE · pericarditis"]
 ```
 
 ## Practice Questions

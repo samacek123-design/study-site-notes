@@ -58,39 +58,18 @@ Heart failure (HF) is a **clinical syndrome** in which the heart cannot pump blo
 - **Cold** (hypoperfused): **inotropes** (dobutamine, dopamine); mechanical support (intra-aortic balloon pump, ECMO) if refractory/cardiogenic shock.
 - Identify and treat the **precipitant** (ischaemia, arrhythmia, anaemia, infection, non-adherence, thyroid, drugs).
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((Heart Failure))
-    Physiology
-      Forward low output
-      Backward congestion
-      Frank-Starling decompensation
-      HFrEF vs HFpEF
-    Diagnosis
-      Clinical Framingham/Boston
-      BNP rule out
-      Echo LVEF
-      NYHA / ACC stage
-    Causes
-      Pressure/volume overload
-      Myocardial ischaemia/CMP
-      Final common path
-    Chronic Rx HFrEF
-      ARNI/ACEI
-      Beta-blocker
-      MRA
-      SGLT2i
-      Diuretic symptom
-    Devices
-      CRT wide QRS
-      ICD low LVEF
-      LVAD / transplant
-    Acute HF
-      Warm/cold wet/dry
-      Diuretic + nitrate
-      Inotropes if cold
+flowchart TD
+  A["Exertional dyspnoea / congestion"] --> B["BNP + echo for LVEF"]
+  B --> C{"LVEF <=40%?"}
+  C -->|"Yes - HFrEF"| D["4 pillars: ARNI/ACEI · beta-blocker · MRA · SGLT2i"]
+  C -->|"No - HFpEF"| E["Treat BP/AF · diuretic · SGLT2i"]
+  D --> F["Still congested -> add loop diuretic"]
+  D --> G["LVEF <=35% + wide QRS -> CRT/ICD"]
+  A --> H{"Acute + hypoperfused (cold/wet)?"}
+  H -->|Yes| I["IV diuretic + nitrate; inotropes if cold"]
 ```
 
 ## Practice Questions

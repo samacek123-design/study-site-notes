@@ -44,30 +44,19 @@ Acute coronary syndrome (ACS) is the acute presentation of coronary atherothromb
 - **Statin** to LDL-C ≤1.4 mmol/L.
 - **Risk factors**: smoking cessation, BP control ([[Hypertension]]), glycaemic control (HbA1c ~7%), diet/weight, cardiac rehabilitation.
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((ACS))
-    Spectrum
-      STEMI occlusive
-      NSTEMI troponin +
-      UA troponin -
-    Diagnosis
-      Serial ECG
-      hs-troponin 0/1h
-      Wellens = LAD
-      Echo / CTCA
-    Acute Rx
-      Anti-ischaemic O2 GTN morphine
-      DAPT aspirin + P2Y12
-      Anticoagulation
-      Invasive vs conservative
-    Secondary prevention
-      DAPT 12 months
-      Statin LDL <=1.4
-      Beta-blocker + ACEI
-      Risk factors + rehab
+flowchart TD
+  A["Ischaemic chest pain"] --> B["ECG + serial hs-troponin"]
+  B --> C{"ST elevation?"}
+  C -->|Yes| D["STEMI -> immediate reperfusion (PCI or lysis)"]
+  C -->|No| E{"Troponin rise?"}
+  E -->|Yes| F["NSTEMI -> DAPT + anticoag, angiography by risk"]
+  E -->|No| G["Unstable angina -> DAPT + ischaemia testing"]
+  D --> H["Secondary prevention: DAPT 12m · statin LDL <=1.4 · beta-blocker · ACEI"]
+  F --> H
+  G --> H
 ```
 
 ## Practice Questions

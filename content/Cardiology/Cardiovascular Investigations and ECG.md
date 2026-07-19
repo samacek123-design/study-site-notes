@@ -45,28 +45,16 @@ Cardiovascular investigations exist to **confirm the diagnosis, delineate the ca
 - **Cardiac catheterisation**: coronary angiography, direct chamber pressures, cardiac output, **gold standard for pulmonary hypertension** and shunt quantification (Qp/Qs).
 - **Endomyocardial biopsy** (myocarditis/infiltration — only if it changes treatment); **genetic testing** for heritable disease.
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((CVS Investigations))
-    Bloods
-      BNP rule out HF
-      hs-troponin injury
-      D-dimer rule out PE
-    ECG
-      Systematic read
-      Lead localisation
-      Disease patterns
-    Imaging
-      CXR CTR / Kerley B
-      Echo TTE vs TOE
-      Cardiac MRI tissue
-      Catheter gold standard PHT
-    Functional
-      Holter / loop recorder
-      Exercise ECG
-      Tilt table
+flowchart TD
+  A["Cardiac symptom"] --> B{"Which question?"}
+  B -->|"Breathless / ?HF"| C["BNP (rule out) -> echo for LVEF"]
+  B -->|"Chest pain / ?ischaemia"| D["hs-troponin + ECG -> CTCA / angiography"]
+  B -->|"Syncope / palpitations"| E["ECG -> Holter / loop recorder / tilt table"]
+  B -->|"Structure / valves"| F["Echo TTE -> TOE / cardiac MRI"]
+  B -->|"?PE"| G["D-dimer -> CTPA"]
 ```
 
 ## Practice Questions

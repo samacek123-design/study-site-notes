@@ -40,30 +40,17 @@ Congenital heart disease presents in children in two big patterns: **heart failu
 - **Medical HF therapy**: diuretics, digoxin, ACEI, carvedilol.
 - **Definitive**: surgical or catheter correction of the lesion; **PGE** for duct-dependent lesions; **balloon septostomy** for TGA; ECMO/ventricular assist device as a **bridge** to recovery or transplant.
 
-## Mind Map
+## Approach
 
 ```mermaid
-mindmap
-  root((Paediatric CHD))
-    Heart failure
-      Overload not pump
-      Poor feeding, FTT, sweating
-      Neonate LVOTO
-      Infant L-R shunt VSD/PDA
-    Duct-dependent
-      Systemic weak femorals
-      Pulmonary cyanosis
-      Keep open with PGE
-    Cyanotic CHD
-      TOF boot-shaped tet spell
-      TGA parallel switch
-      Common mixing truncus/TAPVC
-      Ebstein
-    Management
-      Diuretic digoxin ACEI
-      Surgery/catheter repair
-      Balloon septostomy
-      ECMO/VAD bridge
+flowchart TD
+  A["Neonate/infant: cyanosis or heart failure"] --> B{"Cyanosed?"}
+  B -->|Yes| C{"Duct-dependent?"}
+  C -->|Yes| D["Prostaglandin (PGE) to keep duct open"]
+  C -->|"Mixing lesion"| E["TGA · TOF · truncus / TAPVC -> surgery, septostomy"]
+  B -->|"No - heart failure signs"| F{"Timing?"}
+  F -->|"Neonate"| G["LVOTO (coarctation, HLHS) -> weak femorals, PGE"]
+  F -->|"Infant, L-R shunt"| H["VSD / PDA -> diuretic, digoxin, ACEI, repair"]
 ```
 
 ## Practice Questions
