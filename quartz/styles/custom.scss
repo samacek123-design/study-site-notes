@@ -240,7 +240,7 @@ a.tag-link {
   & > .callout-title {
     align-items: center;
     gap: 0.7rem;
-    padding: 1.05rem 0;
+    padding: 0.9rem 0;
     color: var(--dark);
     cursor: pointer;
 
@@ -255,11 +255,9 @@ a.tag-link {
       color: var(--dark);
     }
 
-    /* Leading marker: small, quiet, tinted with the accent --------- */
-    & .callout-icon {
-      --icon-size: 17px;
-      background-color: var(--qa-accent);
-      opacity: 0.9;
+    /* Drop the leading question-mark icon for a clean, uncluttered row */
+    & .callout-icon:not(.fold-callout-icon) {
+      display: none;
     }
 
     /* Fold chevron: pushed right, hairline-quiet ------------------- */
@@ -277,12 +275,13 @@ a.tag-link {
     opacity: 0.7;
   }
 
-  /* Answer body: comfortable measure, muted ink ------------------- */
+  /* Answer body: compact, muted ink — sits right under the question */
   & > .callout-content {
     color: var(--darkgray);
     font-size: 0.95rem;
     line-height: 1.62;
-    padding: 0 0 1.05rem;
+    padding: 0 0 1rem;
+    margin-top: -0.25rem;
 
     & > :first-child {
       margin-top: 0;
@@ -295,33 +294,37 @@ a.tag-link {
       color: var(--dark);
       font-weight: $semiBoldWeight;
     }
-    /* hairline divider between prompt and answer */
-    border-top: 1px solid color-mix(in srgb, var(--qa-border) 70%, transparent);
-    margin-top: -0.35rem;
-    padding-top: 0.9rem;
   }
 
-  /* Collapsed: hide the divider so the row reads as one clean line */
+  /* Collapsed: zero out body padding so the card is just the title row */
   &.is-collapsed > .callout-content {
-    border-top: 0;
+    padding: 0;
+    margin-top: 0;
   }
 }
 
 /* Mermaid diagrams as clean quick-reference panels -------------------- */
 .mermaid,
 pre:has(> code.mermaid) {
-  display: flex;
-  justify-content: center;
-  margin: 1.8rem auto;
-  padding: 1.5rem 1rem;
+  display: block;
+  /* let the diagram breathe past the reading measure so it reads at a glance */
+  width: min(100%, 980px);
+  margin: 1.9rem auto;
+  padding: 1.75rem 1.5rem;
   background: var(--card-bg);
   border: 1px solid var(--hairline);
   border-radius: var(--radius);
   overflow-x: auto;
 }
-.mermaid svg {
-  max-width: 100%;
-  height: auto;
+/* Fill the panel width and scale up — mermaid pins an inline max-width on the
+   SVG that keeps small diagrams tiny; override it so text is comfortably large. */
+.mermaid svg,
+pre > code.mermaid svg {
+  display: block;
+  margin: 0 auto;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
 }
 
 /* Right rail is empty (TOC/graph/backlinks all off) — reclaim its space */

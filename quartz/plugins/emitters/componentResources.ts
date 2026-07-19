@@ -258,18 +258,37 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     `)
   }
 
-  // Mermaid reliability net. The community OFM plugin renders `code.mermaid`
-  // via a remote ESM import (cdnjs) that can silently fail — leaving the raw
-  // diagram source on the page. This mops up any diagram left unrendered,
-  // loading mermaid from a second CDN, and re-themes them on theme toggle.
+  // Mermaid reliability net. The community OFM plugin renders \`code.mermaid\`
+  // by feeding this site's theme CSS vars straight into mermaid — but the
+  // quartz-themes plugin defines those as unresolved \`hsl(calc(...))\` values,
+  // which mermaid's colour parser can't evaluate, so \`initialize()\` throws and
+  // NOTHING renders (leaving raw diagram source on the page). This renders any
+  // unprocessed diagram ourselves, resolving each CSS var to a concrete rgb()
+  // first, and falls back to mermaid's built-in theme if anything still fails.
   componentResources.afterDOMLoaded.push(`
     (() => {
       let importing
       const load = () =>
         (importing ||= import("https://cdn.jsdelivr.net/npm/mermaid@11/+esm").then((m) => m.default))
+      const source = new WeakMap()
+
+      // Resolve a CSS custom property to a concrete colour. Reading the raw var
+      // value yields an unevaluated hsl(calc(...)) string that breaks mermaid;
+      // painting it on a probe element forces the browser to compute rgb().
+      const resolveColor = (name, fallback) => {
+        try {
+          const probe = document.createElement("span")
+          probe.style.cssText = "color:var(" + name + ");position:absolute;visibility:hidden"
+          document.body.appendChild(probe)
+          const c = getComputedStyle(probe).color
+          probe.remove()
+          return c || fallback
+        } catch {
+          return fallback
+        }
+      }
       const cssVar = (n) =>
         getComputedStyle(document.documentElement).getPropertyValue(n).trim()
-      const source = new WeakMap()
 
       async function renderPending() {
         const nodes = [...document.querySelectorAll("code.mermaid")].filter(
@@ -284,20 +303,32 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
           return
         }
         const dark = document.documentElement.getAttribute("saved-theme") === "dark"
-        mermaid.initialize({
+        const base = {
           startOnLoad: false,
           securityLevel: "loose",
-          theme: dark ? "dark" : "base",
-          themeVariables: {
-            fontFamily: cssVar("--codeFont"),
-            primaryColor: cssVar("--light"),
-            primaryTextColor: cssVar("--darkgray"),
-            primaryBorderColor: cssVar("--tertiary"),
-            lineColor: cssVar("--darkgray"),
-            secondaryColor: cssVar("--secondary"),
-            tertiaryColor: cssVar("--tertiary"),
-          },
-        })
+          flowchart: { useMaxWidth: true, htmlLabels: true, padding: 12, nodeSpacing: 55, rankSpacing: 55 },
+          theme: dark ? "dark" : "default",
+        }
+        try {
+          mermaid.initialize({
+            ...base,
+            themeVariables: {
+              fontFamily: cssVar("--codeFont") || "inherit",
+              fontSize: "17px",
+              primaryColor: resolveColor("--light", dark ? "#1c1c1e" : "#ffffff"),
+              primaryTextColor: resolveColor("--darkgray", dark ? "#d4d4d4" : "#2b2b2b"),
+              primaryBorderColor: resolveColor("--tertiary", "#84a59d"),
+              lineColor: resolveColor("--gray", "#9a9a9a"),
+              secondaryColor: resolveColor("--secondary", "#7b97aa"),
+              tertiaryColor: resolveColor("--lightgray", dark ? "#393639" : "#e5e5e5"),
+              clusterBkg: resolveColor("--light", dark ? "#1c1c1e" : "#ffffff"),
+            },
+          })
+        } catch (e) {
+          // Never let a theming problem block rendering — use the stock theme.
+          console.warn("mermaid fallback: theme init failed, using default", e)
+          mermaid.initialize(base)
+        }
         for (const el of nodes) {
           if (!source.has(el)) source.set(el, el.textContent)
           try {
