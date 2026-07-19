@@ -18,6 +18,7 @@ import {
   parsePluginSource,
   installPlugin,
   installNativeDeps,
+  regeneratePluginIndex,
   getPluginEntryPoint,
   toFileUrl,
   isLocalSource,
@@ -275,6 +276,10 @@ export async function loadQuartzConfig(
   if (allNativeDeps.size > 0) {
     installNativeDeps(allNativeDeps, { verbose: false })
   }
+
+  // Rebuild .quartz/plugins/index.ts — components like Head.tsx import from it,
+  // and on a fresh checkout (e.g. Vercel) it doesn't exist until plugins install.
+  await regeneratePluginIndex()
 
   // Collect manifests (requires native deps to be installed first)
   for (const entry of enabledEntries) {
